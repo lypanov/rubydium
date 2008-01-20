@@ -1,0 +1,13 @@
+mkdir -p /tmp/nanovm
+rm -f /tmp/insns.out.c
+ruby filter.rb < insns/insns.in.c > /tmp/insns.out.c
+ruby -e 'insns = STDIN.gets nil; puts IO.read("./nanovm.c").gsub(/#include "\/tmp\/insns.out.c"/, insns)' < /tmp/insns.out.c > /tmp/nanovm/nanovm.c
+cp extconf.rb /tmp/nanovm
+pwd=$PWD
+cd /tmp/nanovm
+ruby extconf.rb
+make clean
+make
+echo "now try: cd /tmp/nanovm; sudo make install; cd $pwd"
+echo "     or: cd /tmp/nanovm; make install; cd $pwd"
+cd $pwd

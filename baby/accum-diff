@@ -1,0 +1,19 @@
+#!/usr/bin/ruby
+hashes=[]
+changelist=`darcs changes --last #{ARGV.first} --xml`
+changelist.each_line {
+   |line|
+   next unless line =~ /hash='(.*?).gz'/
+   hashes << $1
+}
+added, removed = 0, 0
+hashes.each {
+   |hash|
+   diff=`darcs annotate --match "hash #{hash}"`
+   diff.each_line {
+      |l|
+      added   += 1 if l =~ /^[+]/
+      removed += 1 if l =~ /^[-]/
+   }
+}
+puts "+#{added} -#{removed}"

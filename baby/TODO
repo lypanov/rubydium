@@ -1,0 +1,7 @@
+possible optimisations:
+ 1 further back insertion of cached functions
+ 2 snapshotting of cached functions - reduces startup time hugely
+ 3 if/while inlining
+
+# TODO - replace ruth: example reason - LocalAssign. has an .id which is overrided vs the standard .id
+

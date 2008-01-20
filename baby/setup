@@ -1,0 +1,8 @@
+#!/bin/sh
+chmod 755 ./basic.rb
+chmod 755 ./perf.rb
+chmod 755 ./big.rb
+chmod 755 ./other.rb
+chmod 755 ./memfilter.rb
+chmod 755 ./accum-diff
+chmod 755 ./tc_all.rb

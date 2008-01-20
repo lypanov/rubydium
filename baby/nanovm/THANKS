@@ -1,0 +1,4 @@
+Tilman Sauerbeck 
+   - for a *LOT* of help and tutoring while debugging the garbage collection problems, thanks!!!
+Aredridel
+   - pointer update idea, which led to the succint .pos= and .instr extensions
