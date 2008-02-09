@@ -1,5 +1,4 @@
 require "test/unit"
-require 'nanovm'
 
 $int_re   = /(-)?\d+/
 $float_re = /#{$int_re}\.#{$int_re}/
@@ -285,22 +284,10 @@ def dump_instructions func
       opcode = id2opcode[i[0]]
       t = [opcode, i[1..-1]]
       case opcode.to_sym
-      when :insn_add
+      when :insn_add, :insn_sub, :insn_mul, :insn_eq, :insn_lt
          dst, src1, src2 = *i[1..-1]
          rsrc1, rsrc2, rdst = (val_t src1), (val_t src2), (val_t dst)
-         $main << "add #{rdst}, #{rsrc1}, #{rsrc2}"
-      when :insn_sub
-         dst, src1, src2 = *i[1..-1]
-         rsrc1, rsrc2, rdst = (val_t src1), (val_t src2), (val_t dst)
-         $main << "sub #{rdst}, #{rsrc1}, #{rsrc2}"
-      when :insn_mul
-         dst, src1, src2 = *i[1..-1]
-         rsrc1, rsrc2, rdst = (val_t src1), (val_t src2), (val_t dst)
-         $main << "mul #{rdst}, #{rsrc1}, #{rsrc2}"
-      when :insn_eq
-         dst, src1, src2 = *i[1..-1]
-         rsrc1, rsrc2, rdst = (val_t src1), (val_t src2), (val_t dst)
-         $main << "is_eq #{rdst}, #{rsrc1}, #{rsrc2}"
+         $main << "#{opcode.to_s} #{rdst}, #{rsrc1}, #{rsrc2}"
       when :insn_ret
          src = *i[1]
          $main << "return #{val_t src}"
@@ -336,6 +323,10 @@ def dump_instructions func
          dst, src = *i[1..-1]
          rdst, rsrc = (val_t dst), (val_t src)
          $main << "alloc_bytearray #{rdst}, #{rsrc}"
+      when :insn_bac
+         dst, src, size = *i[1..-1]
+         rdst, rsrc, rsize = (val_t dst), (val_t src), (val_t size)
+         $main << "bytearray_copy #{rdst}, #{rsrc}, #{rsize}"
       when :insn_sba
          mem, offs, data = *i[1..-1]
          rmem, roffs, rdata = (val_t mem), (val_t offs), (val_t data)
