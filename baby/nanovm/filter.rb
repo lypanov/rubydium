@@ -1,7 +1,7 @@
 # DUP from tc_all.rb
 ops = %w(insn_nop insn_add insn_ret insn_br insn_bri insn_brn insn_eq insn_ne 
          insn_cpi insn_st insn_cba insn_lba insn_sba insn_cdi insn_cbf insn_ccf 
-         insn_sub insn_mul insn_div insn_rem insn_lt insn_gt insn_hit insn_bac insn_hot)
+         insn_sub insn_mul insn_div insn_rem insn_lt insn_gt insn_hit insn_bac insn_hot insn_fail)
 id2opcode = ops.inject({}) { |hash, opcode| hash[(ops.index opcode) + 6] = opcode.to_sym; hash }
 had_one = false
 out = ""

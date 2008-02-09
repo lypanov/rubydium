@@ -204,3 +204,6 @@ Instruction: INSN_LBA
             dbg("  : %p[%d] == %d\n", ptr->value.ptr_val, offs->value.int_val, ret->value.ptr_val);
             // if (offs->value.int_val > ptr->size)
                // raise_error({snprintf(buf, 512, "LBA (%i). %i > %i", idx, offs->value.int_val, ptr->size);});
+Instruction: INSN_FAIL
+            dbg("reporting a failure\n");
+            raise_error({sprintf(buf, "really really big bad FAILURE!");});

@@ -419,6 +419,7 @@ static VALUE f_create_local(VALUE self, VALUE ret_v, VALUE type_sym)
 #define INSN_HIT 28
 #define INSN_BAC 29
 #define INSN_HOT 30
+#define INSN_FAIL 31
 
 static void f_mark(FunctionSelf *func)
 {
@@ -602,6 +603,9 @@ DEFINE_OPERATOR_INSTR3(f_insn_store_elem,           INSN_SBA);
 // increases the hit count for a given id (1)
 DEFINE_OPERATOR_INSTR1(f_insn_hit,                  INSN_HIT);
 
+// exits the vm immediatly
+DEFINE_OPERATOR_INSTR1(f_insn_fail,                 INSN_FAIL);
+
 // tests the hit count against the supplied ceiling (3) for a given id (2) and places the result in (1)
 DEFINE_OPERATOR_INSTR3(f_insn_hot,                  INSN_HOT);
 
@@ -768,6 +772,7 @@ void Init_nanovm() {
    rb_define_method(cFunction, "insn_branch_if_not", f_insn_branch_if_not, 2);
    rb_define_method(cFunction, "param_bindings", f_param_bindings, 0);
    rb_define_method(cFunction, "insn_hit", f_insn_hit, 1);
+   rb_define_method(cFunction, "insn_fail", f_insn_fail, 0);   
    rb_define_method(cFunction, "insn_hit_test", f_insn_hot, 3);
    rb_define_method(cFunction, "insn_call_print_int", f_insn_call_print_int, 1);
    rb_define_method(cFunction, "insn_call_alloc_bytearray", f_insn_call_alloc_bytearray, 2);
