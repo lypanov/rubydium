@@ -6,7 +6,32 @@ class Test_Basic < Test::Unit::TestCase
 
    include TestMod
    
-   # DO_TESTS = [:test_empty_class_def]
+   # DO_TESTS = [:test_12_instance_variable_hooks]
+   
+   def test_12_instance_variable_hooks
+         do_blah <<SRC, "25\n100\n", [1823, 3279]
+         class Blah
+            def init
+               alloc_self
+            end
+            def callhookload a
+               dget a
+            end
+            def callhook b, a
+               dset a, b
+            end
+            def test_self
+               @a = 25
+               @b = 100
+               pi @a
+               pi @b
+            end
+         end
+         blah = Blah.new
+         blah.init
+         blah.test_self
+SRC
+   end
 
    def test_empty_class_def
          do_blah <<SRC, "2\n", [85, 88]
@@ -173,7 +198,7 @@ SRC
    end
 
    def test_11_return_from_instance_method
-         do_blah <<SRC, nil, [688, 1153]
+         do_blah <<SRC, nil, [667, 1153]
          # testcase for return values on instance methods
          # problem was caused as fall through to Def at end of 
          # method happened and the return value was discarded
