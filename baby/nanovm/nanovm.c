@@ -689,27 +689,27 @@ static VALUE ptr2string(VALUE klass, VALUE ptr, VALUE len)
 
 static VALUE stringpoke(VALUE klass, VALUE ptr, VALUE new_str, VALUE len)
 {
-   memcpy((char *)NUM2UINT(ptr), RSTRING(new_str)->ptr, NUM2INT(len));
+   memcpy((char *)NUM2UINT(ptr), RSTRING_PTR(new_str), NUM2INT(len));
    return Qnil;
 }
 
 static VALUE bytearray2ptr(VALUE klass, VALUE _str)
 {
    VALUE str = StringValue(_str);
-   int *new_str = malloc(4 * RSTRING(str)->len);
-   memcpy(new_str, RSTRING(str)->ptr, RSTRING(str)->len);
+   int *new_str = malloc(4 * RSTRING_LEN(str));
+   memcpy(new_str, RSTRING_PTR(str), RSTRING_LEN(str));
    return INT2NUM((int)new_str);
 }
 
 static VALUE string2ptr(VALUE klass, VALUE _str)
 {
    VALUE str = StringValue(_str);
-   int *new_str = malloc(4 * ((1 + RSTRING(str)->len) * 2)), *dst = new_str;
+   int *new_str = malloc(4 * ((1 + RSTRING_LEN(str)) * 2)), *dst = new_str;
    int pos;
-   *(dst++) = RSTRING(str)->len;
+   *(dst++) = RSTRING_LEN(str);
    *(dst++) = 2;
-   for (pos = 0; pos < RSTRING(str)->len; pos++) {
-      *(dst++) = (int)RSTRING(str)->ptr[pos];
+   for (pos = 0; pos < RSTRING_LEN(str); pos++) {
+      *(dst++) = (int)RSTRING_PTR(str)[pos];
       *(dst++) = 2;
    }
    return INT2NUM((int)new_str);
