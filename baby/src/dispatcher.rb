@@ -2237,13 +2237,13 @@ DBG
       @func_defs, @class_func_defs = {}, {}
       gen_orders
       function = build_function(@crawler.path2id(@ast_order.first), OUTER_SCOPE, -1, nil, true)
-      # begin
+      begin
          function.apply []
-      # rescue => e
-      #   p e
-      #   dump_instructions e.function
-      #   exit
-      # end
+      rescue NanoVMException => e
+         p e
+         dump_instructions e.function
+         exit
+      end
       StateCache::save_cache self
       if $debug
          print_bm_report
