@@ -916,19 +916,21 @@ class EvalMachine
          # store back to local
          mem_ctx.locals_dict.assign_value block_sym, stored_int, type
          # we didn't pop from the stack, so i don't *think* we need to push, right?
-      when Iasgn, Ivar
+=end
+      when :iasgn, :ivar
          # push symbol
-         mem_ctx.return_rbstack.push NN::mk_constant(func, :int, current_ast_element.attr_name.to_i), NN::mk_type(func, :int)
-         method, num_params, clear_scope = (current_ast_element.is_a?(Iasgn) ? :callhook : :callhookload), 1, true
+         mem_ctx.return_rbstack.push NN::mk_constant(func, :int, current_sexp_element[1].to_i), NN::mk_type(func, :int)
+         method, num_params, clear_scope = ((sexptype(current_sexp_element) == :iasgn) ? :callhook : :callhookload), 1, true
          num_params += 1 if method == :callhook
          selected_func_defs = @class_func_defs[@self_type]
          self_mem_ptr_ptr, dummy = mem_ctx.locals_dict.load_local_var :__self__
          mem_ctx.return_rbstack.push self_mem_ptr_ptr, NN::mk_type(func, @self_type.to_sym)
-         path = selected_func_defs.keys.detect { |cpath| @crawler.find_path_ast(cpath).name == method }
+         path = selected_func_defs.keys.detect { |cpath| @crawler.find_path_sexp(cpath)[1] == method }
          call_function = selected_func_defs[path]
          DebugLogger::runtime_print_string func, :rt_block, "pushing null block\n"
          mem_ctx.return_rbstack.push create_null_packed_block(func), NN::mk_type(func, :block)
          ProfFuncWithMd::md_add_assumption func, [:assumption, :self, [:type, @self_type]]
+=begin
       when If
          ;
 =end
