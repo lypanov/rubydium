@@ -924,11 +924,12 @@ class EvalMachine
          num_params += 1 if method == :callhook
          selected_func_defs = @class_func_defs[@self_type]
          self_mem_ptr_ptr, dummy = mem_ctx.locals_dict.load_local_var :__self__
+         mem_ctx.return_rbstack.push create_null_packed_block(func), NN::mk_type(func, :block)
          mem_ctx.return_rbstack.push self_mem_ptr_ptr, NN::mk_type(func, @self_type.to_sym)
+         # stack now == __self__ (top), __block__ (top-1)
          path = selected_func_defs.keys.detect { |cpath| @crawler.find_path_sexp(cpath)[1] == method }
          call_function = selected_func_defs[path]
          DebugLogger::runtime_print_string func, :rt_block, "pushing null block\n"
-         mem_ctx.return_rbstack.push create_null_packed_block(func), NN::mk_type(func, :block)
          ProfFuncWithMd::md_add_assumption func, [:assumption, :self, [:type, @self_type]]
 =begin
       when If
