@@ -614,6 +614,7 @@ end
          puts "pop_from_stack - #{caller.first}" if check_dbg(:rt_primitives)
       if @clever
          if @virtual_stack.empty?
+            # TODO - find out if its valid that this is frequently the clause followed true!
 #           puts "#{self}: POPPING from below the stack!"
          else
 #           puts "#{self}: A Normal Pop"
