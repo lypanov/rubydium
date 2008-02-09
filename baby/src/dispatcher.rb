@@ -2240,6 +2240,7 @@ DBG
       begin
          function.apply []
       rescue NanoVMException => e
+         puts $str_buffer
          p e
          dump_instructions e.function
          exit
