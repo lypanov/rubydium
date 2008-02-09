@@ -626,6 +626,7 @@ end
 #        puts "pop_raw!!!"
          orig_stack_position, type, value = Value.new, Value.new, Value.new
          @func.insn_load_elem orig_stack_position, @mem, NN::mk_constant(@func, :int, 0), :int
+         # FIXME - rename temp to new_position
          temp = Value.new
          # type is high
          @func.insn_load_elem type, @mem, orig_stack_position, :int
@@ -634,8 +635,15 @@ end
          @func.insn_sub temp, orig_stack_position, NN::mk_constant(@func, :int, 2)
          if check_dbg(:rt_stack)
             name, postproc = stack_sym_info
+            zero = NN::mk_constant(@func, :int, 0)
+            lt_result = Value.new
+            skip_fail = Label.new
             DebugLogger::runtime_print_string @func, name, ".pop( ", temp, " => ", value,
                " : type ", RuntimePrintCallback.new(postproc, type), " )\n"
+            @func.insn_lt lt_result, temp, zero
+            @func.insn_branch_if_not lt_result, skip_fail
+            @func.insn_fail
+            @func.insn_label skip_fail
          end
          @func.insn_store_elem @mem, NN::mk_constant(@func, :int, 0), temp
          return value, type
