@@ -1308,7 +1308,7 @@ DBG
    def build_function_inner_inner mem_ctx, curr_id, prev_id, got_num_params, func, just_did_export, ts
       next_ast_path, num_params, ast_order = nil, nil, nil
       ProfilingFunction.record_hit(func, [:id, curr_id])
-      DebugLogger::runtime_print_string func, :rt_runtime_curr_id_trace, "runtime message : #{curr_id} - #{elt_to_s ts.sexp_elt}\n"
+      DebugLogger::runtime_print_string func, :rt_runtime_curr_id_trace, "executing at id:#{curr_id} - #{elt_to_s ts.sexp_elt}\n"
       idbg(:dbg_build_function_inner_inner) {
          red("***BLOCK***") + " :: #{ts.sexp_elt.inspect}, PATH :: #{ts.path.inspect} (#{curr_id})"
       }

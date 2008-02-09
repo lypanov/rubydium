@@ -61,7 +61,8 @@ EOF
             assert_equal expected, $str_buffer
          end
       end
-      fail "no expected counts given! "if expected_counts.nil?
+      fail "no expected counts given!, actual: [#{machine.number_of_instructions_executed}, #{machine.number_of_generated_instructions}]" \
+         if expected_counts.nil?
       diff = (machine.number_of_instructions_executed-expected_counts[0]).abs
       error_ratio = diff.to_f / machine.number_of_instructions_executed.to_f
       if error_ratio > 0.03
