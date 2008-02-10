@@ -6,7 +6,7 @@ class Test_Basic < Test::Unit::TestCase
 
    include TestMod
    
-   DO_TESTS = [:test_8_instance_method_calls_self_method]
+   # DO_TESTS = [:test_8_instance_method_calls_self_method]
 
    def test_31
          do_blah <<SRC, "-5\n2\n5\n-5\n2\n5\n", [535, 802]

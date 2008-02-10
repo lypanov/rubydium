@@ -360,7 +360,9 @@ class CodeTree
          if inner_sexp.class.to_s =~ /(Sexp|Array)/
             preload_ast inner_sexp, new_path
             if (sexp.first == :call) and idx == 0 # push before the first param
-               assoc_path = new_path + [-1]
+               # FIXME - extract
+               assoc_path = path + [-1]
+               fail "already associated something with #{assoc_path.inspect}" if @associated.has_key? assoc_path
                @associated[assoc_path] = :push_block
                @id2path_hash[@id2path_hash.length] = assoc_path
             end
@@ -368,7 +370,9 @@ class CodeTree
          @id2path_hash[@id2path_hash.length] = new_path
       }
       if [:vcall,:fcall].include? sexp.first
+         # FIXME - extract
          assoc_path = path + [-1]
+         fail "already associated something with #{assoc_path.inspect}" if @associated.has_key? assoc_path
          @associated[assoc_path] = :push_block
          @id2path_hash[@id2path_hash.length] = assoc_path
       end

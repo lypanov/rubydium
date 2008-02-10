@@ -1,21 +1,3 @@
-   def test_8_instance_method_calls_self_method
-      return
-         do_blah <<SRC, "7\n"
-         class Boo
-            def two
-               one + one
-            end
-            def one
-               pi 1
-               1
-            end
-         end
-         t = Boo.new
-         t.two
-         t.two
-SRC
-   end
-
    def test_32
       return
          do_blah <<SRC, /error: attempting to access unused local 'a' from \d+$\n/, [362, 592]
