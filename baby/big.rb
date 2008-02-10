@@ -55,7 +55,7 @@ SRC
    end
 
    def test_25_yields
-         do_blah <<SRC, nil, [32298, 16183]
+         do_blah <<SRC, nil, [21455, 11972]
          class Blah
             def init
                alloc_self
@@ -206,7 +206,7 @@ SRC
             end
          end
 EOF
-         do_blah <<SRC, nil, [34854, 14403]
+         do_blah <<SRC, nil, [24019, 10709]
          #{str_impl}
       def print_spaces n
          from_and_to(1, n) {

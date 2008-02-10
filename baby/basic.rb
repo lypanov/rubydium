@@ -25,7 +25,7 @@ SRC
    end
    
    def test_8_instance_method_calls_self_method
-         do_blah <<SRC, "2\n"
+         do_blah <<SRC, "2\n", [635, 902]
          class Boo
             def two
                one + one
@@ -40,7 +40,7 @@ SRC
    end
    
    def test_12_instance_variable_hooks
-         do_blah <<SRC, "25\n100\n", [1823, 3279]
+         do_blah <<SRC, "25\n100\n", [1746, 3120]
          class Blah
             def init
                alloc_self
@@ -74,7 +74,7 @@ SRC
    end
 
    def test_1_templates_scopes
-      do_blah <<SRC, nil, [1860, 2358]
+      do_blah <<SRC, nil, [1654, 2041]
          # useful for testing templated scopes
          def scope1 a, b
             b = -2
@@ -94,7 +94,7 @@ SRC
    end
 
    def test_2_simple_yield_instance_method
-         do_blah <<SRC, nil, [1137, 2274]
+         do_blah <<SRC, nil, [1137, 2160]
          class Test
             def init
                alloc_self
@@ -136,7 +136,7 @@ SRC
    end
 
    def test_4_while_break_yield
-         do_blah <<SRC, nil, [2023, 2982]
+         do_blah <<SRC, nil, [1637, 2487]
       def count_up_to top
          n = 0
          while true
@@ -157,7 +157,7 @@ SRC
    end
 
    def test_5_simple_yield
-         do_blah <<SRC, nil, [1315, 3565]
+         do_blah <<SRC, nil, [1098, 2687]
          def thrice
             yield
             yield
@@ -205,7 +205,7 @@ SRC
    end
 
    def test_9_looped_instance_create_and_method_call
-         do_blah <<SRC, nil, [1544, 1464]
+         do_blah <<SRC, nil, [1033, 903]
          class Blah
             def five
                5
@@ -229,7 +229,7 @@ SRC
    end
 
    def test_11_return_from_instance_method
-         do_blah <<SRC, nil, [667, 1153]
+         do_blah <<SRC, nil, [525, 1036]
          # testcase for return values on instance methods
          # problem was caused as fall through to Def at end of 
          # method happened and the return value was discarded
@@ -245,7 +245,7 @@ SRC
    end
 
    def test_13_dict_get_set
-         do_blah <<SRC, nil, [703, 1241]
+         do_blah <<SRC, nil, [626, 1040]
          class Blah
             def init
                alloc_self
@@ -264,7 +264,7 @@ SRC
    end
 
    def test_14_instance_method_calls_kernel_method
-         do_blah <<SRC, nil, [581, 909]
+         do_blah <<SRC, nil, [541, 795]
          class Boo
             def calc
                pi 5
@@ -282,7 +282,7 @@ SRC
    end
 
    def test_15_trivial_while_break
-         do_blah <<SRC, nil, [465, 858]
+         do_blah <<SRC, nil, [248, 420]
          n = 0
          while true
             pi n
@@ -293,7 +293,7 @@ SRC
    end
 
    def test_16_set_get
-         do_blah <<SRC, nil, [809, 1398]
+         do_blah <<SRC, nil, [744, 1161]
          class Blah
             def one
                alloc_self
@@ -330,7 +330,7 @@ SRC
    end
 
    def test_36
-         do_blah <<SRC, nil, [1577, 2179]
+         do_blah <<SRC, nil, [1130, 2045]
          # test yielding while loop with a break
          def blah
             n = 0
@@ -350,7 +350,7 @@ SRC
    end
 
    def test_37
-         do_blah <<SRC, nil, [769, 1079]
+         do_blah <<SRC, nil, [375, 545]
          # test while loop with a break
          n = 0
          while n < 5
@@ -363,7 +363,7 @@ SRC
    end
 
    def test_38
-         do_blah <<SRC, nil, [1243, 1659]
+         do_blah <<SRC, nil, [897, 1300]
          # test iterators in global methods
          def times n
             ln = 0
@@ -382,7 +382,7 @@ SRC
    end
 
    def test_39
-         do_blah <<SRC, nil, [1195, 1843]
+         do_blah <<SRC, nil, [847, 1386]
          # test an implementation of times method
          def times n
             ln = 0
@@ -398,7 +398,7 @@ SRC
    end
 
    def test_40
-         do_blah <<SRC, nil, [1945, 1842]
+         do_blah <<SRC, nil, [1564, 2109]
          # test yielding while loop - while end condition is tested in this one, but not in the above one
          def blah
             n = 0
@@ -417,7 +417,7 @@ SRC
    end
 
    def test_41
-         do_blah <<SRC, nil, [552, 771]
+         do_blah <<SRC, nil, [509, 797]
          # test multiple method definitions with differing prototypes
          def blah
             pi 8
@@ -448,7 +448,7 @@ SRC
    end
 
    def test_45
-         do_blah <<SRC, nil, [941, 813]
+         do_blah <<SRC, nil, [435, 467]
          # test while loop
          n = 0
          while n < 5

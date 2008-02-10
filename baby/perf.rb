@@ -13,7 +13,7 @@ class Test_Perf < Test::Unit::TestCase
    end
 
    def test_perf_inc_while_with_break
-         do_blah <<SRC, nil, [158159, 886]
+         do_blah <<SRC, nil, [65131, 439]
          n = 0
          while true
             n += 1
@@ -26,7 +26,7 @@ SRC
    end
 
    def test_perf_instantiate_call_instance_method
-         do_blah <<SRC, nil, [15884, 1289]
+         do_blah <<SRC, nil, [9993, 848]
          class Blah
             def one
                1
@@ -42,7 +42,7 @@ SRC
    end
 
    def test_perf_call_two_methods
-         do_blah <<SRC, nil, [9040, 1435]
+         do_blah <<SRC, nil, [6169, 866]
          def bub
             1
          end
@@ -62,7 +62,7 @@ SRC
    def test_perf_call_single_method
       # TODO - this is broken when we use 2000 instead of 1000...
       count = real_test? ? 1000 : 20
-         do_blah <<SRC, nil, [207204, 958]
+         do_blah <<SRC, nil, [129206, 597]
          def bub
             1
          end
@@ -76,7 +76,7 @@ SRC
    end
 
    def test_perf_trivial_while
-         do_blah <<SRC, nil, [29766, 731]
+         do_blah <<SRC, nil, [9361, 344]
          a = 0
          while a < 200
             a += 1
@@ -87,7 +87,7 @@ SRC
    end
 
    def test_perf_iterator
-         do_blah <<SRC, nil, [6643, 3295]
+         do_blah <<SRC, nil, [4635, 2649]
          def times n
             ln = 0
             while ln < n
