@@ -61,14 +61,16 @@ EOF
             assert_equal expected, $str_buffer
          end
       end
-      fail "no expected counts given!, actual: [#{machine.number_of_instructions_executed}, #{machine.number_of_generated_instructions}]" \
+      actual = "actual: [#{machine.number_of_instructions_executed}, #{machine.number_of_generated_instructions}]"
+      fail "no expected counts given!, #{actual}" \
          if expected_counts.nil?
       diff = (machine.number_of_instructions_executed-expected_counts[0]).abs
       error_ratio = diff.to_f / machine.number_of_instructions_executed.to_f
       if error_ratio > 0.03
-         fail "error ratio: #{error_ratio}, #{machine.number_of_instructions_executed} vs expected #{expected_counts[0]}"
+         fail "error perc.: #{(error_ratio * 100).to_i}%, #{actual} vs expected #{expected_counts.inspect}"
       end
-      assert_equal expected_counts[1], machine.number_of_generated_instructions
+      fail "number_of_generated_instructions did not match! #{actual}" \
+         if expected_counts[1] != machine.number_of_generated_instructions
    end
 
    def do_test ctx, string, should_be

@@ -345,7 +345,7 @@ class EvalMachine
          end
          if $opt_scope_templates and !is_bouncer and (ProfFuncWithMd::md_not_all_static_lookups? func)
             idbg(:scope_templates) {
-               "NOT GONNA STATIC LINK TO #{next_id} AS ITS GOT A #{(ProfFuncWithMd::md_lookups func).inspect}"
+               "NOT GONNA STATIC LINK TO #{next_id} AS ITS GOT A #{(ProfFuncWithMd::md_lookups func).inspect} LOOKUP!"
             }
             link_statically = false
          end
@@ -455,7 +455,7 @@ class EvalMachine
          mem_ctx = MemContext.new Value.new, Value.new, Value.new, nil
          build_main_func_init bouncer, mem_ctx, curr_id
          mem_ctx.locals_dict = DictLookup.new(self, func, @scope_linkage, mem_ctx)
-         puts "BUILDING A BOUNCER! - #{curr_id} <- #{prev_id}" if check_dbg(:rt_bouncer_runtime)
+         puts "BUILDING A BOUNCER! - to #{curr_id} <- from #{prev_id}" if check_dbg(:rt_bouncer_runtime)
          if curr_id == NULL_BLOCK
             DebugLogger::runtime_print_string bouncer, "NULL BLOCK WAS CALLED!!\n"
             bouncer.insn_return NN::mk_constant(bouncer, :int, -666)
@@ -1343,7 +1343,7 @@ DBG
          if !call_function.nil?
             # push next ast position, and old scope id
             idbg(:dbg_build_function_inner_inner) {
-               "CALLING A FUNCTION! - WITH PARAMS #{num_params}, "
+               "CALLING A FUNCTION! - WITH PARAMS #{num_params}, " \
              + "GOING TO #{next_ast_path.inspect} (#{@crawler.path2id(next_ast_path).inspect})"
             }
             push_return_point_bouncer func, mem_ctx, curr_id, next_ast_path, num_params
@@ -1658,7 +1658,7 @@ DBG
    # optimisation
    def slow_dispatch_needs_rebuild? cached_func
       return false unless (ProfFuncWithMd::md_get_slow_dispatches cached_func.func)
-      idbg(:specialisation) { magenta("SLOW DISPATCH IN #{id} [#{cached_func.inspect}]") }
+      idbg(:specialisation) { magenta("SLOW DISPATCH IN [#{cached_func.inspect}]") }
       rebuild = false
       (ProfFuncWithMd::md_get_slow_dispatches cached_func.func).each { 
          |slow_id| 
