@@ -1322,8 +1322,7 @@ DBG
       possible_orders = [@ast_order] + @func_defs.values
       possible_orders += [ts.anon_block.yielder_subpaths, ts.anon_block.subpaths] unless ts.anon_block.nil?
       ast_order = possible_orders.compact.detect { |path_list| path_list.include? ts.path }
-      next_ast_path = ast_order[ast_order.index(ts.path) + 1]
-      jump_type = handle_definitions ts, next_ast_path, ast_order, curr_id, func
+      jump_type = handle_definitions ts, (ast_order[ast_order.index(ts.path) + 1]), ast_order, curr_id, func
       curr_id, next_ast_path = jump_type.new_curr_id, jump_type.jump_ast_path
       @calling_function = false
       if !jump_type.should_not_execute
