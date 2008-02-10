@@ -867,7 +867,7 @@ class EvalMachine
 
    def handle_element func, mem_ctx, current_sexp_element, current_ast_path, anon_block, next_ast_path, ast_order, curr_id
       call_function, num_params = nil, 0
-      case current_sexp_element == :push_block ? :push_block : current_sexp_element.first
+      case sexptype(current_sexp_element)
       when :scope
          idbg(:handle_element) { "ignoring scope ast element" }
          ProfFuncWithMd::md_mark_not_real func
@@ -1218,6 +1218,7 @@ DBG
    end
 
    def sexptype sexp
+      return sexp if sexp == :push_block
       (sexp.is_a? Sexp) ? sexp[0] : nil
    end
 
