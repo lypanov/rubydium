@@ -1,20 +1,3 @@
-   def test_31
-      return
-         do_blah <<SRC, "-5\n2\n5\n-5\n2\n5\n", [535, 832]
-         # test scoping - calling a method should push a new lexical pad
-         def inner_scope
-            a = 2
-            pi -5
-            pi a
-         end
-         a = 5
-         inner_scope # -5, 2
-         pi a        # 5
-         inner_scope # -5, 2
-         pi a        # 5
-SRC
-   end
-   
    def test_8_instance_method_calls_self_method
       return
          do_blah <<SRC, "7\n"
@@ -30,32 +13,6 @@ SRC
          t = Boo.new
          t.two
          t.two
-SRC
-   end
-
-   def test_12_instance_variable_hooks
-      return
-         do_blah <<SRC, "25\n100\n"
-         class Blah
-            def init
-               alloc_self
-            end
-            def callhookload a
-               dget a
-            end
-            def callhook b, a
-               dset a, b
-            end
-            def test_self
-               @a = 25
-               @b = 100
-               pi @a
-               pi @b
-            end
-         end
-         blah = Blah.new
-         blah.init
-         blah.test_self
 SRC
    end
 

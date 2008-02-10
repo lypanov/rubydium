@@ -6,7 +6,38 @@ class Test_Basic < Test::Unit::TestCase
 
    include TestMod
    
-   # DO_TESTS = [:test_12_instance_variable_hooks]
+   DO_TESTS = [:test_8_instance_method_calls_self_method]
+
+   def test_31
+         do_blah <<SRC, "-5\n2\n5\n-5\n2\n5\n", [535, 802]
+         # test scoping - calling a method should push a new lexical pad
+         def inner_scope
+            a = 2
+            pi -5
+            pi a
+         end
+         a = 5
+         inner_scope # -5, 2
+         pi a        # 5
+         inner_scope # -5, 2
+         pi a        # 5
+SRC
+   end
+   
+   def test_8_instance_method_calls_self_method
+         do_blah <<SRC, "2\n"
+         class Boo
+            def two
+               one + one
+            end
+            def one
+               1
+            end
+         end
+         t = Boo.new
+         pi t.two
+SRC
+   end
    
    def test_12_instance_variable_hooks
          do_blah <<SRC, "25\n100\n", [1823, 3279]
