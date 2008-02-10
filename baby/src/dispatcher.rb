@@ -208,7 +208,7 @@ class EvalMachine
          idbg(:node_predict) { "node isn't real!, lets predict! - #{next_id.inspect}" }
          return true
       end
-      if [:while, :true, :false, :str, :lit, :lvar, :lasgn, :const, :dvar].include? sexptype(curr_sexp)
+      if [:while, :true, :false, :str, :lit, :lvar, :lasgn, :const, :dvar, :push_block].include? sexptype(curr_sexp)
          idbg(:node_predict) { "got #{curr_sexp.inspect}, lets predict! - #{next_id.inspect}" }
          return true
       end

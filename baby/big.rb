@@ -9,7 +9,7 @@ class Test_Big < Test::Unit::TestCase
    # DO_TESTS = [:test_25_yields]
 
    def test_24
-         do_blah <<SRC, nil, [14392, 6507]
+         do_blah <<SRC, nil, [10508, 5221]
          class Blah
             def init
                alloc_self
