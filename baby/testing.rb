@@ -1,5 +1,6 @@
 require "test/unit"
 require "src/dispatcher.rb"
+$enable_cache = false
 require "tempfile"
 
 module TestMod

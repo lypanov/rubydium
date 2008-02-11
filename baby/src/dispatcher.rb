@@ -6,6 +6,8 @@ require './clean.rb'
 # 04/01/08 - 3215
 #   (wc src/dispatcher.rb clean.rb)
 
+$enable_cache = true
+
 class EvalMachine
 
    attr_accessor :object, :self_type, :old_functions, :scope_hash, :time_vs_instructions_log, :ast_order, :source
@@ -60,8 +62,10 @@ class EvalMachine
       @node2type_cache = $debug_logged_cache ? LoggedHash.new("node2type_cache") : {}
       @time_vs_instructions_log = []
       @execution_started_at = Time.now
-      @scope_linkage = { OUTER_SCOPE => [] }
-      puts "loaded from cache!" if StateCache::load_cache self
+      @scope_linkage = { OUTER_SCOPE => [] }      
+      if $enable_cache && StateCache::load_cache(self)
+         puts "loaded from cache!" 
+      end
    end
 
    def make_comment
@@ -2248,7 +2252,7 @@ DBG
          dump_instructions e.function
          exit
       end
-      StateCache::save_cache self
+      StateCache::save_cache(self) if $enable_cache
       if $debug
          print_bm_report
          puts "MISSES : #{@func_cache_misses}, HITS :: #{@func_cache_hits}"
