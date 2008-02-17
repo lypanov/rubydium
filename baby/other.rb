@@ -12,17 +12,6 @@
 SRC
    end
 
-   def test_17
-         do_blah <<SRC, "200\n"
-         class Book
-            def self.blah a,b
-               a*b*10
-            end
-         end
-         pi Book.blah 4,5
-SRC
-   end
-
    def test_26
          do_blah <<SRC, "5\n-6\n"
          class Blub
@@ -67,31 +56,6 @@ SRC
          }
          block1.call 5, 10
          block2.call 5, 10
-SRC
-   end
-
-   def test_35
-         do_blah <<SRC, "15\n"
-         # test simple proc.call
-         my_block = proc {
-            |p1, p2|
-            pi p1 + p2
-         }
-         my_block.call 5, 10
-SRC
-   end
-
-   def test_46
-         do_blah <<SRC, "2\n2\n"
-         # test if
-         n = 2
-         if n == 1
-            pi 1
-         end
-         if n == 2
-            pi 2
-         end
-         pi n
 SRC
    end
 

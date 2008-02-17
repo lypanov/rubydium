@@ -910,17 +910,16 @@ class EvalMachine
       when Def, Defs
          idbg(:handle_element) { "got a method definition! - #{next_ast_path.inspect}" }
          ProfFuncWithMd::md_mark_not_real func
-      when BlockArg
+=end
+      when :block_arg
          idbg(:handle_element) { "skipping block arg element..." }
-         block_sym = current_ast_element.to_a[1]
-         local_sym = current_ast_element.to_a.first # todo - whats the .blah version?
+         block_sym = current_sexp_element[1]
          stored_int, type = mem_ctx.locals_dict.load_local_var :__block__
          idbg(:handle_element) { "associating __block__ with #{block_sym}" }
          mem_ctx.return_rbstack.push stored_int, type
          # store back to local
          mem_ctx.locals_dict.assign_value block_sym, stored_int, type
          # we didn't pop from the stack, so i don't *think* we need to push, right?
-=end
       when :iasgn, :ivar
          # push symbol
          mem_ctx.return_rbstack.push NN::mk_constant(func, :int, current_sexp_element[1].to_i), NN::mk_type(func, :int)
@@ -935,10 +934,8 @@ class EvalMachine
          call_function = selected_func_defs[path]
          DebugLogger::runtime_print_string func, :rt_block, "pushing null block\n"
          ProfFuncWithMd::md_add_assumption func, [:assumption, :self, [:type, @self_type]]
-=begin
-      when If
+      when :if
          ;
-=end
       when :lasgn, :dasgn_curr_hacked
          # pop the value, store to local, push the value again - as in, return it
          local_sym = current_sexp_element[1]

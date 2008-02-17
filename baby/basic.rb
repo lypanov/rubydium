@@ -6,9 +6,38 @@ module Test_Basic
 
    include TestMod
    
-   # DO_TESTS = [:test_8_instance_method_calls_self_method]
+   # DO_TESTS = [:test_46]
+   def test_46
+         do_blah <<SRC, "2\n2\n", [178, 477]
+         # test top level if, requires handling of :if in handle_element, other pathways don't hit that for some reason?
+         n = 2
+         if n == 1
+            pi 1
+         end
+         if n == 2
+            pi 2
+         end
+         pi n
+SRC
+   end
+   
+   def test_44_trivial_block_arg
+         do_blah <<SRC, "5\n1\n5\n2\n", [794, 1428]
+         # test trivial block - no complex scopes
+         def blah &block
+            block.call 1
+            block.call 2
+         end
+         a = 5
+         blah {
+            |val|
+            pi a
+            pi val
+         }
+SRC
+   end
 
-   def test_31
+   def test_31_scoping
          do_blah <<SRC, "-5\n2\n5\n-5\n2\n5\n", [535, 802]
          # test scoping - calling a method should push a new lexical pad
          def inner_scope

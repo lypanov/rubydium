@@ -1,18 +1,26 @@
-   def test_32
-      return
-         do_blah <<SRC, /error: attempting to access unused local 'a' from \d+$\n/, [362, 592]
-         # test scoping - calling a method should push a new lexical pad and thusly in this case, fail
-         def inner_scope
-            a += 5
+   def test_35
+         do_blah <<SRC, "15\n"
+         # test simple proc.call
+         my_block = proc {
+            |p1|
+            pi p1
+         }
+         my_block.call 5
+SRC
+   end
+      
+   def test_17
+         do_blah <<SRC, "200\n"
+         class Book
+            def self.blah a,b
+               a*b*10
+            end
          end
-         a = 5
-         inner_scope
-         pi a
+         pi Book.blah 4,5
 SRC
    end
 
-   def test_34
-      return
+   def test_34_two_param_block_arg
          do_blah <<SRC, "20\n"
          # test passing block as argument
          def blah num, &block
@@ -25,20 +33,16 @@ SRC
 SRC
    end
 
-   def test_44
+   def test_32
       return
-         do_blah <<SRC, "5\n1\n5\n2\n"
-         # test trivial block - no complex scopes
-         def blah &block
-            block.call 1
-            block.call 2
+         do_blah <<SRC, /error: attempting to access unused local 'a' from \d+$\n/, [362, 592]
+         # test scoping - calling a method should push a new lexical pad and thusly in this case, fail
+         def inner_scope
+            a += 5
          end
          a = 5
-         blah {
-            |val|
-            pi a
-            pi val
-         }
+         inner_scope
+         pi a
 SRC
    end
 
