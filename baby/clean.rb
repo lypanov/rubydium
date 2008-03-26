@@ -1,8 +1,10 @@
 require 'nanovm'
 require 'nanovm/nano.rb'
 
-$: << "../ruby_parser-1.0.0/lib"
-require 'ruby_parser.rb'
+# $: << "../ruby_parser-1.0.0/lib"
+# require "ruby_parser"
+require "rubygems"
+require 'parse_tree'
 
 require "./debug.rb"
 require 'src/misc.rb'
@@ -304,6 +306,29 @@ Annotation = Struct.new :type
       end
    end
 
+if true
+   class Array
+      def sexp_body
+         return self[1..-1]
+      end
+   end
+   def is_a_sexp? elt
+      # complete hack!!!
+      elt.is_a? Array and elt[0].is_a? Symbol
+   end
+   def s *foo
+      return [*foo]
+   end
+else
+   def is_a_sexp? elt
+      elt.is_a? Sexp
+   end
+   class ParseTree
+      def self.translate src
+         RubyParser.new.parse(src)
+      end
+   end
+end
 class CodeTree
    attr_accessor :ast, :id2path_hash
    def initialize sexp
@@ -314,7 +339,7 @@ class CodeTree
       @id2path_hash[@id2path_hash.length] = []
    end
    def ast_hacks sexp
-     insides = sexp.sexp_body.map { |elt| (elt.is_a? Sexp) ?  ast_hacks(elt) : elt }
+     insides = sexp.sexp_body.map { |elt| is_a_sexp?(elt) ? ast_hacks(elt) : elt }
      # turn blocks with > 2 children into [:block, child1, [:block, child2, child3]]
      if sexp.first == :block && sexp[1].first == :dasgn_curr
        # emulate legacy node, not produced by ParseTree and can probably be removed later on
@@ -389,7 +414,7 @@ class CodeTree
       sexp = @sexp if sexp.nil?
       path = []    if path.nil?
       return sexp  if to_find.empty?
-      arr = (sexp.is_a? Sexp) ? sexp.sexp_body : sexp
+      arr = is_a_sexp?(sexp) ? sexp.sexp_body : sexp
       arr.each_with_index {
          |inner_sexp, idx|
          # if the current element of to_find == the current idx

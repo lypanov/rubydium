@@ -38,8 +38,7 @@ class EvalMachine
       @old_functions = []
       @func_cache = {}
       @func_cache_hits, @func_cache_misses = 0, 0
-      @rp      = RubyParser.new
-      @sexp    = @rp.parse string
+      @sexp    = ParseTree.translate string
       @source  = string
       @crawler = CodeTree.new @sexp
       @context = ctx
@@ -1220,7 +1219,7 @@ DBG
 
    def sexptype sexp
       return sexp if sexp == :push_block
-      (sexp.is_a? Sexp) ? sexp[0] : nil
+      is_a_sexp?(sexp) ? sexp[0] : nil
    end
 
    # TODO this logic must be rewritten!
@@ -1436,6 +1435,7 @@ DBG
       loop {
          idbg(:node_predict) { "... continuing yay with #{curr_id} and previous was #{prev_id}" }
          @func_ids << curr_id
+         old_curr_id = curr_id
          curr_id, next_ast_path, num_params, ast_order = \
             build_function_inner_inner mem_ctx, curr_id, prev_id, got_num_params, func, just_did_export, ts \
             unless curr_id == FINISHED
