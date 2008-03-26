@@ -1154,7 +1154,7 @@ class EvalMachine
       if !klass_path.nil? and ts.path == klass_path + [0] # Colon2
          return handle_klass_definition(klass_path, ast_order, curr_id, func)
       end
-      curr_path = cached_outer_element_find @def_cache, ts.path, ast_order, true, :defn_hacked, :def
+      curr_path = cached_outer_element_find @def_cache, ts.path, ast_order, true, :defn_hacked, :def, :defs
       # FIXME - do this : shortcut optimisation: if past first node in a function we don't need to check, we just assume its not a define
       if !curr_path.nil? 
          result = handle_method_definition curr_path, klass_path, ast_order, ts.path, func
