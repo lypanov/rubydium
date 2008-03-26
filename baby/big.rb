@@ -2,7 +2,7 @@
 
 require "testing.rb"
 
-class Test_Big < Test::Unit::TestCase
+module Test_Big
 
    include TestMod
 

@@ -2,11 +2,11 @@
 
 require "testing.rb"
 
-class Test_Perf < Test::Unit::TestCase
+module Test_Perf
 
    include TestMod
 
-   # DO_TESTS = [:test_perf_iterator]
+   # DO_TESTS = [:test_perf_inc_while_with_break]
 
    def real_test?
       (!Comparison.left? and !Comparison.right?)

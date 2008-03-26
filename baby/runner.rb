@@ -1,8 +1,6 @@
-require "basic.rb"
-
-tests = Test_Basic.public_instance_methods.grep(/^test_/)
+def foo tests, filename, module_name, slice_size
 groups = []
-tests.each_slice(16) {
+tests.each_slice(slice_size) {
    |slice|
    groups << slice
 }
@@ -10,14 +8,14 @@ tests.each_slice(16) {
 File.open("tmp/test.rb", "wb") {
 	|t|
 	t.write """
-require \"basic.rb\"
+require \"#{filename}\"
 class Test_Boo < Test::Unit::TestCase
-   include Test_Basic
+   include #{module_name}
 end
-tests = Test_Basic.public_instance_methods.grep(/^test_/)
+tests = #{module_name}.public_instance_methods.grep(/^test_/)
 tests.each {
 	|method|
-	Test_Basic.module_eval {
+	#{module_name}.module_eval {
 	   unless ARGV.include? method
 	      undef_method(method)
 	   end
@@ -42,8 +40,19 @@ clean:
 	groups.each_with_index {
 	   |slice, n|
       t.write """
-out#{n}: basic.rb
+out#{n}: #{filename}
 \truby tmp/test.rb #{slice.join " "} > out#{n}
 """
    }
 }
+
+system("make -f tmp/Makefile clean; make -j3 -f tmp/Makefile")
+end
+
+require "basic.rb"
+require "big.rb"
+require "perf.rb"
+
+foo(Test_Basic.public_instance_methods.grep(/^test_/), "basic.rb", "Test_Basic", 16)
+foo(Test_Big.public_instance_methods.grep(/^test_/), "big.rb", "Test_Big", 2)
+foo(Test_Perf.public_instance_methods.grep(/^test_/), "perf.rb", "Test_Perf", 3)
