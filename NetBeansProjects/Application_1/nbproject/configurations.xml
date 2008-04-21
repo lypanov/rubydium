@@ -28,9 +28,19 @@
         <platform>4</platform>
       </toolsSet>
       <compileType>
+        <ccCompilerTool>
+          <includeDirectories>
+            <directoryPath>/Users/lypanov/install/llvm/include</directoryPath>
+          </includeDirectories>
+          <commandLine>-D__STDC_LIMIT_MACROS</commandLine>
+        </ccCompilerTool>
         <linkerTool>
+          <linkerAddLib>
+            <directoryPath>/Users/lypanov/install/llvm/lib</directoryPath>
+          </linkerAddLib>
           <linkerLibItems>
           </linkerLibItems>
+          <commandLine>/Users/lypanov/install/llvm/lib/LLVMSparc.o /Users/lypanov/install/llvm/lib/LLVMPowerPC.o /Users/lypanov/install/llvm/lib/LLVMMSIL.o /Users/lypanov/install/llvm/lib/LLVMMips.o -lLLVMLinker -lLLVMipo /Users/lypanov/install/llvm/lib/LLVMInterpreter.o -lLLVMInstrumentation /Users/lypanov/install/llvm/lib/LLVMIA64.o /Users/lypanov/install/llvm/lib/LLVMExecutionEngine.o /Users/lypanov/install/llvm/lib/LLVMJIT.o -lLLVMDebugger /Users/lypanov/install/llvm/lib/LLVMCellSPU.o /Users/lypanov/install/llvm/lib/LLVMCBackend.o -lLLVMBitWriter /Users/lypanov/install/llvm/lib/LLVMX86.o -lLLVMAsmParser /Users/lypanov/install/llvm/lib/LLVMARM.o -lLLVMArchive -lLLVMBitReader /Users/lypanov/install/llvm/lib/LLVMAlpha.o -lLLVMSelectionDAG -lLLVMCodeGen -lLLVMScalarOpts -lLLVMTransformUtils -lLLVMipa -lLLVMAnalysis -lLLVMTarget -lLLVMCore -lLLVMSupport -lLLVMSystem</commandLine>
         </linkerTool>
       </compileType>
       <item path="newmain.cpp">

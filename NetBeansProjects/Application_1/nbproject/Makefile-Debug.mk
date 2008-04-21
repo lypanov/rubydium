@@ -31,25 +31,25 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-D__STDC_LIMIT_MACROS
+CXXFLAGS=-D__STDC_LIMIT_MACROS
 
 # Fortran Compiler Flags
 FFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/Users/lypanov/install/llvm/lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS} dist/Debug/GNU-MacOSX/application_1
 
 dist/Debug/GNU-MacOSX/application_1: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-MacOSX
-	${LINK.cc} -o dist/Debug/GNU-MacOSX/application_1 ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} /Users/lypanov/install/llvm/lib/LLVMSparc.o /Users/lypanov/install/llvm/lib/LLVMPowerPC.o /Users/lypanov/install/llvm/lib/LLVMMSIL.o /Users/lypanov/install/llvm/lib/LLVMMips.o -lLLVMLinker -lLLVMipo /Users/lypanov/install/llvm/lib/LLVMInterpreter.o -lLLVMInstrumentation /Users/lypanov/install/llvm/lib/LLVMIA64.o /Users/lypanov/install/llvm/lib/LLVMExecutionEngine.o /Users/lypanov/install/llvm/lib/LLVMJIT.o -lLLVMDebugger /Users/lypanov/install/llvm/lib/LLVMCellSPU.o /Users/lypanov/install/llvm/lib/LLVMCBackend.o -lLLVMBitWriter /Users/lypanov/install/llvm/lib/LLVMX86.o -lLLVMAsmParser /Users/lypanov/install/llvm/lib/LLVMARM.o -lLLVMArchive -lLLVMBitReader /Users/lypanov/install/llvm/lib/LLVMAlpha.o -lLLVMSelectionDAG -lLLVMCodeGen -lLLVMScalarOpts -lLLVMTransformUtils -lLLVMipa -lLLVMAnalysis -lLLVMTarget -lLLVMCore -lLLVMSupport -lLLVMSystem -o dist/Debug/GNU-MacOSX/application_1 ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/newmain.o: newmain.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	$(COMPILE.cc) -g -o ${OBJECTDIR}/newmain.o newmain.cpp
+	$(COMPILE.cc) -g -I/Users/lypanov/install/llvm/include -o ${OBJECTDIR}/newmain.o newmain.cpp
 
 # Subprojects
 .build-subprojects:
