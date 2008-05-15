@@ -1,17 +1,17 @@
 require 'nanovm'
-require 'nanovm/nano.rb'
+require '../nanovm/nano.rb'
 
-# $: << "../ruby_parser-1.0.0/lib"
-# require "ruby_parser"
-require "rubygems"
-require 'parse_tree'
+$: << "../../ruby_parser-1.0.0/lib" << "../3rdparty/breakpoint"
+require 'ruby_parser'
+# require "rubygems"
+# require 'parse_tree'
 
-require "./debug.rb"
-require 'src/misc.rb'
-require 'src/bench.rb'
+require 'debug-declarations.rb'
+require 'misc.rb'
+require 'bench.rb'
 
 require 'pp'
-require '3rdparty/breakpoint/breakpoint'
+require 'breakpoint'
 require 'digest/md5'
 require 'pstore'
 require 'yaml/store.rb' # including this shaves a few seconds of testing, why?
@@ -306,7 +306,7 @@ Annotation = Struct.new :type
       end
    end
 
-if true
+if false # set to true if we want to test parsetree usage
    class Array
       def sexp_body
          return self[1..-1]

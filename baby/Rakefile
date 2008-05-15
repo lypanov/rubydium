@@ -1,0 +1,12 @@
+require "rubygems"
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+task :default => [:runner]
+
+desc "Runs the test set in parallel"
+task :runner do
+  Dir.chdir("src")
+  require "runner.rb"
+end

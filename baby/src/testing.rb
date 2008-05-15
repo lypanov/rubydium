@@ -1,5 +1,5 @@
 require "test/unit"
-require "src/dispatcher.rb"
+require "dispatcher.rb"
 $enable_cache = false
 require "tempfile"
 

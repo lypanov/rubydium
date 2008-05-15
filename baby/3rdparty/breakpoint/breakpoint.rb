@@ -16,7 +16,7 @@
 # license please contact me.
 
 require 'irb'
-require '3rdparty/breakpoint/binding_of_caller'
+require 'binding_of_caller'
 require 'drb'
 require 'drb/acl'
 require 'thread'
