@@ -1968,6 +1968,7 @@ DBG
       notes = { :next_ids => [], :assumptions => [], :was_generated_by => caller_func }
       func = ProfilingFunction.new @context
       func.metadata = notes
+      ProfFuncWithMd::md_metadata(func)
       func.metadata[:hints] = @build_hints # FIXME
       @old_functions << func
       @predicting_next_id = []

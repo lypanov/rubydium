@@ -26,19 +26,24 @@ Context.debug = $nanovm_debug
 class ProfFuncWithMd
 
    def self.md_metadata func
-      func.metadata = {}
+      func.metadata ||= {}
+      func.metadata[:mdstruct] ||= Struct.new(:path_range).new
+   end
+
+   def self.mdstruct func
+      func.metadata[:mdstruct]
    end
 
    def self.md_get_id func
-      func.metadata[:path_range].first
+      mdstruct(func).path_range.first
    end
 
    def self.md_get_path_range func
-      func.metadata[:path_range]
+      mdstruct(func).path_range
    end
 
    def self.md_set_path_range func, new_path_range
-      func.metadata[:path_range] = new_path_range
+      mdstruct(func).path_range = new_path_range
    end
 
    def self.md_init_and_add_to_caller_map_and_return_size func, str
