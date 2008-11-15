@@ -70,8 +70,8 @@ EOF
       if error_ratio > 0.03
          fail "error perc.: #{(error_ratio * 100).to_i}%, #{actual} vs expected #{expected_counts.inspect}"
       end
-      fail "number_of_generated_instructions did not match! #{actual}" \
-         if expected_counts[1] != machine.number_of_generated_instructions
+      fail "number_of_generated_instructions did not match! #{actual} : #{expected_counts[1]} != #{machine.number_of_generated_instructions}" \
+        if expected_counts[1] != machine.number_of_generated_instructions
    end
 
    def do_test ctx, string, should_be
