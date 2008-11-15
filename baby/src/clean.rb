@@ -74,10 +74,6 @@ class ProfFuncWithMd
       func.metadata[:assumptions] << obj
    end
 
-   def self.md_set_specifalized func, on
-      func.metadata[:specialized] = on
-   end
-
    def self.md_add_to_static_continuation_points func, next_id
       func.metadata[:static_continuation_point] ||= []
       func.metadata[:static_continuation_point] << next_id

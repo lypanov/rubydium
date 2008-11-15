@@ -564,7 +564,6 @@ class EvalMachine
          # remove the type from the cache after the node has been specialized 
          # and indicate the atom as specialized (see ANN1 for more information)
          # @node2type_cache.delete curr_id TODO FIXME
-         ProfFuncWithMd::md_set_specifalized func, [:on_type, hit.type]
       else
          idbg(:self_cache) { "RECEIVER CACHE MISS!!! - #{method}" }
          if !@object.nil? and has_receiver 
